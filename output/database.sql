@@ -1,22 +1,26 @@
 CREATE TABLE vaccinations_by_age_group(
-        location VARCHAR(50) PRIMARY KEY,
+        ID INTEGER,
+        location VARCHAR(50),
         date DATE,
         age_group VARCHAR(30),
         people_vaccinated_per_hundred REAL,
-        people_fully_vaccinated_per_hundred REAL
+        people_fully_vaccinated_per_hundred REAL,
+        PRIMARY KEY (ID, location)
 );
 
-
 CREATE TABLE vaccinations_by_manufacturer(
-        location VARCHAR(50) PRIMARY KEY,
+        ID INTEGER,
+        location VARCHAR(50),
         date DATE,
         vaccine VARCHAR,
-        total_vaccinations INTEGER
+        total_vaccinations INTEGER,
+        PRIMARY KEY (ID, location)
 );
 
 CREATE TABLE vaccinations(
+        ID INTEGER,
         location VARCHAR(50),
-        iso_code VARCHAR(5) PRIMARY KEY,
+        iso_code VARCHAR(5),
         date DATE,
         total_vaccinations INTEGER,
         people_vaccinated INTEGER,
@@ -28,7 +32,8 @@ CREATE TABLE vaccinations(
         people_vaccinated_per_hundred REAL,
         people_fully_vaccinated_per_hundred REAL,
         total_boosters_per_hundred REAL,
-        daily_vaccinations_per_million REAL     
+        daily_vaccinations_per_million REAL,
+        PRIMARY KEY (ID, iso_code)     
 );
 
 CREATE TABLE locations(
@@ -65,13 +70,12 @@ CREATE TABLE us_state_vaccinations(
         people_fully_vaccinated INTEGER,
         people_vaccinated_per_hundred REAL,
         distributed_per_hundred REAL,
-        daily_vaccinations_raw INTEGER
+        daily_vaccinations_raw INTEGER,
         daily_vaccinations INTEGER,
         daily_vaccinations_per_million REAL,
         share_doses_used REAL,
         location_country VARCHAR(50),
-        PRIMARY KEY (date, location_state),
-        FOREIGN KEY (location_country) REFERENCES united_states(location)   
+        PRIMARY KEY (date, location_state)
 );
 
 CREATE TABLE australia(
@@ -118,8 +122,5 @@ CREATE TABLE france(
 CREATE TABLE contains_age_groups_manufacturers(
         location VARCHAR(50),
         iso_code VARCHAR(5),
-        PRIMARY KEY (location, iso_code),
-        FOREIGN KEY (location) REFERENCES vaccinations_by_age_group(location),
-        FOREIGN KEY (location) REFERENCES vaccinations_by_manufacturer(location), 
-        FOREIGN KEY (iso_code) REFERENCES vaccinations(iso_code)
+        PRIMARY KEY (location, iso_code)
 );
